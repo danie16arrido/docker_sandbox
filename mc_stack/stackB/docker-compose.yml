@@ -1,0 +1,32 @@
+version: '3.1'
+
+services:
+  nginx:
+      image: nginx:alpine
+      ports:
+          - "8080:80"
+      volumes:
+          - ./nginx.conf:/etc/nginx/nginx.conf:ro   
+  fpm:
+      build: 
+        context: .
+        dockerfile: fpm.dockerfile
+      volumes:
+          - ./laravel:/usr/src/myapp
+      expose:
+          - 9000
+  db:
+    image: percona
+    restart: always
+    volumes:
+      - db-volume:/var/lib/backup/data
+    environment:
+      MYSQL_ROOT_PASSWORD: example
+      MYSQL_DATABASE: ${DB_DATABASE:-orphandb}
+      MYSQL_USER: ${DB_USERNAME:-test}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-juand}
+    ports:
+      - ${DB_EXPOSE_PORT:-33066}:3306
+volumes:
+  db-volume:
+
