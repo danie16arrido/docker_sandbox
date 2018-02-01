@@ -4,11 +4,9 @@
 
 - mv laravel_v5.5.0 laravel
 
-- cd laravel
-
 //run composer for first time
 
-- docker run --rm -u $UID -v $(pwd):/app composer/composer install  
+- docker run --rm -u $UID -v $(pwd)/laravel:/app composer/composer install  
 
 //build stack
 
@@ -18,4 +16,4 @@
 
 - docker-compose exec fpm php artisan key:generate 
 
-- go to localhost:8080  
+- Done!, go to localhost:8080  
