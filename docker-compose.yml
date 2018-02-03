@@ -4,7 +4,7 @@ services:
   nginx:
       image: nginx:alpine
       ports:
-          - "8080:80"
+          - ${WEB_EXPOSE_PORT:-8080}:${WEB_PORT:-80}
       volumes:
           - ./nginx.conf:/etc/nginx/nginx.conf:ro   
   fpm:
@@ -12,20 +12,20 @@ services:
         context: .
         dockerfile: fpm.dockerfile
       volumes:
-          - ./laravel:/usr/src/myapp
+          - ./lara/laravel:/usr/src/myapp
       expose:
-          - 9000
+          - ${FPM_PORT:-9000}
   db:
     image: percona
     restart: always
     volumes:
       - db-volume:/var/lib/backup/data
     environment:
-      MYSQL_ROOT_PASSWORD: example
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-example}
       MYSQL_DATABASE: ${DB_DATABASE:-orphandb}
       MYSQL_USER: ${DB_USERNAME:-test}
       MYSQL_PASSWORD: ${DB_PASSWORD:-juand}
     ports:
-      - ${DB_EXPOSE_PORT:-33066}:3306
+      - ${DB_EXPOSE_PORT:-33066}:${DB_PORT:-3306}
 volumes:
   db-volume:
