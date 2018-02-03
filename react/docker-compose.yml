@@ -2,13 +2,15 @@ version: '3.3'
 
 services:
 
-  sample-app:
-    container_name: ${APP_NAME:-sample-app}
+  react:
+    container_name: ${APP_NAME:-react-app}
     build:
       context: .
       dockerfile: Dockerfile
+      args: 
+        APP_NAME: ${APP_NAME}
     volumes:
-      - ./{$APP_NAME}:/usr/src/app
+      - ./${APP_NAME}:/usr/src/app
     ports:
       - '3000:3000'
     environment:
