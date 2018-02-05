@@ -27,5 +27,20 @@ services:
       MYSQL_PASSWORD: ${DB_PASSWORD:-juand}
     ports:
       - ${DB_EXPOSE_PORT:-33066}:${DB_PORT:-3306}
+  react:
+    container_name: ${APP_NAME:-react-app}
+    build:
+      context: .
+      dockerfile: react.dockerfile
+      args: 
+        APP_NAME: ./react/${APP_NAME}
+    volumes:
+      - ./react/${APP_NAME}:/usr/src/app
+    ports:
+      - ${NODE_EXPOSE_PORT:-3000}:${NODE_PORT:-3000}
+    environment:
+      - NODE_ENV=development 
+    depends_on:
+      - fpm     
 volumes:
   db-volume:

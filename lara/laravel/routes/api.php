@@ -18,5 +18,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/customer', function () {
-    return 'customers:{api}';
-});
+    return ['status' => 'success'];
+})->middleware('api');
+
+// Route::post('/customer', function () {
+//     return ['status' => 'success'];
+// });

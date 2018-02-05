@@ -26,4 +26,4 @@ RUN npm install react-scripts@1.1.0 -g --silent
 # start app
 CMD ["npm", "start"]
 
-USER "${CONTAINER_USER}"
+# USER "${CONTAINER_USER}"
