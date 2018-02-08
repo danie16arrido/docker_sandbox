@@ -6,7 +6,9 @@ services:
       ports:
           - ${WEB_EXPOSE_PORT:-8080}:${WEB_PORT:-80}
       volumes:
-          - ./nginx.conf:/etc/nginx/nginx.conf:ro   
+          - ./nginx.conf:/etc/nginx/nginx.conf:ro  
+      networks:
+      - node-laravel     
   fpm:
       build: 
         context: .
@@ -15,6 +17,9 @@ services:
           - ./lara/laravel:/usr/src/myapp
       expose:
           - ${FPM_PORT:-9000}
+      networks:
+      - node-laravel    
+          
   db:
     image: percona
     restart: always
@@ -40,7 +45,12 @@ services:
       - ${NODE_EXPOSE_PORT:-3000}:${NODE_PORT:-3000}
     environment:
       - NODE_ENV=development 
-    depends_on:
-      - fpm     
+      - REACT_APP_NGINX=${API_END_POINT}
+      
+    networks:
+      - node-laravel   
 volumes:
   db-volume:
+
+networks:
+  node-laravel:  

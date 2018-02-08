@@ -2,7 +2,6 @@
 FROM node:9.4
 
 ARG CONTAINER_USER='php-fpm'
-
 ARG APP_NAME
 ENV APP_NAME=${APP_NAME}
 

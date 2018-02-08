@@ -19,7 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('/customer', function () {
     return ['status' => 'success'];
-})->middleware('api');
+})->middleware('cors');
 
 // Route::post('/customer', function () {
 //     return ['status' => 'success'];
